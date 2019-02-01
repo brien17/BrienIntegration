@@ -43,16 +43,22 @@ public class Main {
     scan.nextLine();
     System.out.println("enter an string");
     String userString = scan.nextLine();
+    System.out.println("You entered");
     System.out.println(userInt);
     System.out.println(userDouble);
     System.out.println(userString);
+    // Casing is taking an object of one type and turning it into another type
+    int userDoubleAsInt = (int)userDouble; 
+    System.out.println("Your double as an int would be " + userDoubleAsInt);
 
-    System.out.println("enter a starting number " + "and an ending number");
+    System.out.println("enter a starting number and an ending number to get make a substring from "
+        + "your string");
     int start = scan.nextInt();
     int end = scan.nextInt();
-    userString = userString.substring(start, end);
-    System.out.println("Your substring is");
-    System.out.println(userString);
+    String userSubstring = userString.substring(start, end);
+    System.out.println("Your substring is \"" + userSubstring + "\"" );
+    
+
     scan.close();
 
   }
