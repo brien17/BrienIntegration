@@ -3,11 +3,14 @@ import java.util.Scanner;
 // Cameron Brien
 // A program to show skills learned in COP 2006.
 
-
 public class Main {
   // final is a keyword that makes it so a variable is immutable
   final int START = 12;
-
+  
+  // this is a header
+  // public is an access modifier
+  // void is the return type (it has no return)
+  // main is the method name
   public static void main(String[] args) {
 
     System.out.println("Welcome to my program");
@@ -29,9 +32,54 @@ public class Main {
      * 
      * scope determines what will have access to a variable
      */
-
+    /*
     boolean isHeads = true;
+    //Scanner scan = new Scanner(System.in);
+    //scannerDemo(scan);
+    double num1 = 5;
+    // this is a call, the parenthesis contain an argument
+    num1 = squareIt(num1);
+    System.out.println(num1);
+
+    Car myCar = new Car();
+    Car otherCar = new Car();
+    myCar.setColor("green");
+    System.out.println(myCar.getColor());
+    otherCar.setColor("blue");
+    System.out.println(otherCar.getColor());
+    myCar.setMake("corrola");
+    System.out.println(myCar.getMake());
+    */
+    int run = 1;
     Scanner scan = new Scanner(System.in);
+    while(run==1) {
+      System.out.println("Enter an Action or help");
+      String input = scan.nextLine();
+      String interpret = interpretInput(input);
+      System.out.println(interpret);
+    }
+    if(run==0) {
+      scan.close();
+    }
+     
+  }
+
+  // this is a header, the parenthesis contain a parameter 
+  public static double squareIt(double num1) {
+    return num1 * num1;
+  }
+  
+  // interpret user input
+  public static String interpretInput(String input) {
+    if(input.toLowerCase().equals("help")) {
+      return "help";
+    }
+    else {
+      return "Input Not Understood";
+    }
+  }
+  
+  public static void scannerDemo(Scanner scan) {
     System.out.println("enter an integer");
     int userInt = scan.nextInt();
     System.out.println("enter a double");
@@ -47,7 +95,7 @@ public class Main {
     System.out.println(userInt);
     System.out.println(userDouble);
     System.out.println(userString);
-    // Casing is taking an object of one type and turning it into another type
+    // Casting is taking an object of one type and turning it into another type
     int userDoubleAsInt = (int)userDouble; 
     System.out.println("Your double as an int would be " + userDoubleAsInt);
 
@@ -56,23 +104,13 @@ public class Main {
     int start = scan.nextInt();
     int end = scan.nextInt();
     String userSubstring = userString.substring(start, end);
-    System.out.println("Your substring is \"" + userSubstring + "\"" );
-    
-
+    System.out.println("Your substring is \"" + userSubstring + "\"" ); 
     scan.close();
-
   }
-
+  
+  
 }
 
-class Clock {
-  // fields
-  private int angleOfHourHand;
-  private int angleOfSecondHand;
 
-  // methods
-  public void time() {
 
-  }
 
-}
