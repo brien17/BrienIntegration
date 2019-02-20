@@ -52,33 +52,64 @@ public class Main {
     */
     int run = 1;
     Scanner scan = new Scanner(System.in);
+    Player pl1 = new Player();
+    Enemy en1 = new Enemy();
+    pl1.newPlayer();
+    en1.generateEnemy(pl1.getLevel());
+    
     while(run==1) {
       System.out.println("Enter an Action or help");
       String input = scan.nextLine();
-      String interpret = interpretInput(input);
+      //this is a call the parenthesis contain an argument
+      String interpret = interpretInput(input, pl1, en1);
       System.out.println(interpret);
+
+      
     }
     if(run==0) {
       scan.close();
     }
      
-  }
-
-  // this is a header, the parenthesis contain a parameter 
-  public static double squareIt(double num1) {
-    return num1 * num1;
-  }
+  } 
   
   // interpret user input
-  public static String interpretInput(String input) {
-    if(input.toLowerCase().equals("help")) {
-      return "help";
-    }
-    else {
-      return "Input Not Understood";
+  public static String interpretInput(String input, Player pl1, Enemy en1) {
+    switch(input.toLowerCase()) {
+      case "help":
+        return "type attack";
+      case "attack":
+        return playerAttack(pl1, en1);
+      default:
+        return "input not understood";
     }
   }
   
+  // player attack
+  public static String playerAttack(Player pl1, Enemy en1) {
+    int damage = pl1.attack();
+    if(damage > 0) {
+      en1.takeDamage(damage);
+      return "You did " + damage + " damage";
+    }  
+    else {
+      return "You missed";
+    }
+    
+  }
+  
+  // enemy attack
+  public static String enemyAttack(Player pl1, Enemy en1) {
+    int damage = en1.attack();
+    if(damage > 0) {
+      en1.takeDamage(damage);
+      return "Enemy hits you for " + damage + " damage";
+    }  
+    else {
+      return "Enemy missed";
+    }
+  }
+
+  // this is a header, the parenthesis contain a parameter   
   public static void scannerDemo(Scanner scan) {
     System.out.println("enter an integer");
     int userInt = scan.nextInt();
