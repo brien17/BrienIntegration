@@ -1,5 +1,8 @@
 import java.util.Random;
 
+// Cameron Brien
+// class used in my main program
+
 public class Player {
   //fields
   int health;
