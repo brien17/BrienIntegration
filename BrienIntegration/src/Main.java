@@ -129,7 +129,8 @@ public class Main {
   }
 
   // this is a header, the parenthesis contain a parameter   
-  public static void scannerDemo(Scanner scan) {
+  public static void scannerDemo() {
+    Scanner scan = new Scanner(System.in);
     System.out.println("enter an integer");
     int userInt = scan.nextInt();
     System.out.println("enter a double");
@@ -158,8 +159,16 @@ public class Main {
     scan.close();
   }
   
+  // a method to use anything in the psi2 requirements I didn't find a place for
   public static void psi2() {
+    System.out.println("enter two numbers");
+    Scanner scan = new Scanner(System.in);
+    int num1 = scan.nextInt();
+    int num2 = scan.nextInt();
+    // multiplication
+    System.out.println(""+ num1 + num2 + "is equal to " + (num1 * num2));
     
+    scan.close();
   }
   
 }
