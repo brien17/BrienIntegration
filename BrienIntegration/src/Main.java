@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import javax.xml.bind.annotation.XmlElementDecl.GLOBAL;
 
 // Cameron Brien
 // A program to show skills learned in COP 2006.
@@ -58,13 +59,21 @@ public class Main {
     en1.generateEnemy(pl1.getLevel());
     
     while(run==1) {
+      
+      // make sure end turn is false at the beginning of the turn
+      boolean endTurn = false;
+      // this loop lets the player make certain actions without ending the turn
+      do {
+      // get player input
       System.out.println("Enter an Action or help");
       String input = scan.nextLine();
-      //this is a call the parenthesis contain an argument
-      String interpret = interpretInput(input, pl1, en1);
-      System.out.println(interpret);
-
       
+      //this is a call the parenthesis contain an argument 
+      endTurn = interpretInput(input, pl1, en1);
+
+      } while(endTurn == false);
+
+      System.out.println(enemyAttack(pl1, en1));
     }
     if(run==0) {
       scan.close();
@@ -73,14 +82,24 @@ public class Main {
   } 
   
   // interpret user input
-  public static String interpretInput(String input, Player pl1, Enemy en1) {
+  public static boolean interpretInput(String input, Player pl1, Enemy en1) {
+    // use a switch to determine what to return based on input
     switch(input.toLowerCase()) {
       case "help":
-        return "type attack";
+        System.out.println("type attack, health, or enemy health");
+        return false;
       case "attack":
-        return playerAttack(pl1, en1);
+        System.out.println(playerAttack(pl1, en1));
+        return true;
+      case "health":
+        System.out.println(pl1.showHealth());
+        return false;
+      case "enemy health":
+        System.out.println(en1.showHealth());
+        return false;
       default:
-        return "input not understood";
+        System.out.println("input not understood");
+        return false;
     }
   }
   
@@ -101,7 +120,7 @@ public class Main {
   public static String enemyAttack(Player pl1, Enemy en1) {
     int damage = en1.attack();
     if(damage > 0) {
-      en1.takeDamage(damage);
+      pl1.takeDamage(damage);
       return "Enemy hits you for " + damage + " damage";
     }  
     else {
@@ -139,6 +158,9 @@ public class Main {
     scan.close();
   }
   
+  public static void psi2() {
+    
+  }
   
 }
 
