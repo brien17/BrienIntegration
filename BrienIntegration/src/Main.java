@@ -1,5 +1,5 @@
 import java.util.Scanner;
-import javax.xml.bind.annotation.XmlElementDecl.GLOBAL;
+
 
 // Cameron Brien
 // A program to show skills learned in COP 2006.
@@ -39,13 +39,14 @@ public class Main {
      * System.out.println(otherCar.getColor()); myCar.setMake("corrola");
      * System.out.println(myCar.getMake());
      */
-
+    // create a scanner object
     Scanner scan = new Scanner(System.in);
     System.out.println("would you like to run integration or play game?");
-    System.out.println("enter 1 for integration and 2 for game");
+    System.out.println("enter 1 for integration and 2 for game");   
     int projectOrGame = scan.nextInt();
+    // if they want to play the game
     if(projectOrGame == 2) {
-      int run = 1;
+      int playerAlive = 1;
       // creating the player object
       Player pl1 = new Player();
       // creating an enemy object
@@ -55,8 +56,9 @@ public class Main {
       // this is a call the parenthesis contain an argument
       // generating stats for the enemy
       en1.generateEnemy(pl1.getLevel());
-  
-      while (run == 1) {
+      
+      // always have something inside the loop that changes the condition
+      while (playerAlive == 1) {
   
         // make sure end turn is false at the beginning of the turn
         boolean endTurn = false;
@@ -66,23 +68,28 @@ public class Main {
           System.out.println("Enter an Action or help");
           String input = scan.nextLine();
   
-
+          // make an action and determine if the player's turn is over or not 
           endTurn = interpretInput(input, pl1, en1);
   
-        } while (endTurn == false); 
+        } while (endTurn == false); //keep going until the player's turn is over
         
+        //check that the enemy is sill alive
         if(en1.showHealth() > 0) {
-        
-          run = enemyAttack(pl1, en1);
           
-          while(run == 0) {
+          //have the enemy attack and check if that kills the player
+          playerAlive = enemyAttack(pl1, en1); 
+          
+          // if the player is dead
+          while(playerAlive == 0) {
             System.out.println("you died");
             System.out.println("play agian? (y or n)");
+            
+            // choose to play again or not \
             switch(scan.nextLine()) {
               case "y":
-                run = 1;
+                playerAlive = 1;
               case "n":
-                run = 0;
+                playerAlive = 0;
                 System.out.println("thanks for playing");
               default:
                 System.out.println("please enter y or n");
@@ -97,7 +104,7 @@ public class Main {
       }
       
     }
-    
+    // run the integration demo
     else if(projectOrGame == 1) {
       scannerDemo(scan);
       psi2(scan);
@@ -194,19 +201,23 @@ public class Main {
     int num1 = scan.nextInt();
     int num2 = scan.nextInt();
     // multiplication
-    System.out.println(num1 + " * " + num2 + "is equal to " + (num1 * num2));
+    System.out.println(num1 + " * " + num2 + " is equal to " + (num1 * num2));
     
     // division
-    System.out.println(num1 + " / " + num2 + "is equal to " + (num1 / num2));
+    System.out.println(num1 + " / " + num2 + " is equal to " + (num1 / num2));
     
     // modulo
-    System.out.println(num1 + " modulo " + num2 + "is equal to " + (num1 % num2));
+    System.out.println(num1 + " modulo " + num2 + " is equal to " + (num1 % num2));
     
     // ++
-    System.out.println(num1 + " and " + num2 + " plus 1 are " + ++num1 + ++num2);
+    System.out.println(num1 + " and " + num2 + " plus 1 are " + ++num1 + " and " + ++num2);
+    
+    // --
+    System.out.println(num1 + " and " + num2 + " minus 1 are " + --num1 + " and " + --num2);
     
     // ? is the ternary operator
-    String biggerOrSmaller = (num1 > num2) ? "first bigger than second" : "second bigger than first";
+    String biggerOrSmaller = (num1 > num2) ? "your first number is bigger than second number" :
+      "your second number is bigger than first number";
     System.out.println(biggerOrSmaller);
     
   }

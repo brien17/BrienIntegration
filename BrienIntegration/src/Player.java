@@ -15,7 +15,7 @@ public class Player {
   
   // generate a new player
   public void newPlayer() {
-    health = 4;
+    health = 10;
     level = 1;
     damageModifier = 1;
     accuracyModifier = 1;
