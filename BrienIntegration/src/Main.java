@@ -30,92 +30,104 @@ public class Main {
      * scope determines what will have access to a variable
      */
     /*
-     * boolean isHeads = true; //Scanner scan = new Scanner(System.in); //scannerDemo(scan); double
-     * num1 = 5; // this is a call, the parenthesis contain an argument num1 = squareIt(num1);
-     * System.out.println(num1);
-     * 
-     * Car myCar = new Car(); Car otherCar = new Car(); myCar.setColor("green");
-     * System.out.println(myCar.getColor()); otherCar.setColor("blue");
-     * System.out.println(otherCar.getColor()); myCar.setMake("corrola");
-     * System.out.println(myCar.getMake());
+    
      */
     // create a scanner object
     Scanner scan = new Scanner(System.in);
     System.out.println("would you like to run integration or play game?");
-    System.out.println("enter 1 for integration and 2 for game");   
-    int projectOrGame = scan.nextInt();
-    // if they want to play the game
-    if(projectOrGame == 2) {
-      int playerAlive = 1;
-      // creating the player object
-      Player pl1 = new Player();
-      // creating an enemy object
-      Enemy en1 = new Enemy();
-      // generating stats for the player
-      pl1.newPlayer();
-      // this is a call the parenthesis contain an argument
-      // generating stats for the enemy
-      en1.generateEnemy(pl1.getLevel());
-      
-      // always have something inside the loop that changes the condition
-      while (playerAlive == 1) {
-  
-        // make sure end turn is false at the beginning of the turn
-        boolean endTurn = false;
-        // this loop lets the player make certain actions without ending the turn
-        do {
-          // get player input
-          System.out.println("Enter an Action or help");
-          String input = scan.nextLine();
-  
-          // make an action and determine if the player's turn is over or not 
-          endTurn = interpretInput(input, pl1, en1);
-  
-        } while (endTurn == false); //keep going until the player's turn is over
-        
-        //check that the enemy is sill alive
-        if(en1.showHealth() > 0) {
-          
-          //have the enemy attack and check if that kills the player
-          playerAlive = enemyAttack(pl1, en1); 
-          
-          // if the player is dead
-          while(playerAlive == 0) {
-            System.out.println("you died");
-            System.out.println("play agian? (y or n)");
-            
-            // choose to play again or not \
-            switch(scan.nextLine()) {
-              case "y":
-                playerAlive = 1;
-              case "n":
-                playerAlive = 0;
-                System.out.println("thanks for playing");
-              default:
-                System.out.println("please enter y or n");
-            }
-          }
-        }
-        else {
-          en1 = new Enemy();
-          en1.generateEnemy(pl1.getLevel());
-          System.out.println("a new enemy appears");
-        }
+    System.out.println("enter i for integration and g for game");
+    int projectOrGame = 0;
+    while (projectOrGame == 0) {
+      switch (scan.nextLine()) {
+        case "i":
+          projectOrGame = 1;
+          break;
+        case "g":
+          projectOrGame = 2;
+          break;
+        default:
+          System.out.println("input not understood");
       }
-      
+    }
+    // if they want to play the game
+    if (projectOrGame == 2) {
+      runGame(scan);
     }
     // run the integration demo
-    else if(projectOrGame == 1) {
+    else if (projectOrGame == 1) {
       scannerDemo(scan);
       psi2(scan);
     }
-      
-      
-  }
 
+
+  }
+  // run the game
+  public static void runGame(Scanner scan) {
+    // set the player as alive
+    int playerAlive = 1;
+    // creating the player object
+    Player pl1 = new Player();
+    // creating an enemy object
+    Enemy en1 = new Enemy();
+    // generating stats for the player
+    pl1.newPlayer();
+    // this is a call the parenthesis contain an argument
+    // generating stats for the enemy
+    en1.generateEnemy(pl1.getLevel());
+    // always have something inside the loop that changes the condition
+    while (playerAlive == 1) {
+
+      // make sure end turn is false at the beginning of the turn
+      boolean endTurn = false;
+      // this loop lets the player make certain actions without ending the turn
+      do {
+        // get player input
+        System.out.println("Enter an Action or help");
+        String input = scan.nextLine();
+
+        // make an action and determine if the player's turn is over or not
+        endTurn = interpretInput(input, pl1, en1);
+
+      } while (endTurn == false); // keep going until the player's turn is over
+
+      // check that the enemy is sill alive
+      if (en1.showHealth() > 0) {
+
+        // have the enemy attack and check if that kills the player
+        playerAlive = enemyAttack(pl1, en1);
+
+        // if the player is dead
+        while (playerAlive == 0) {
+          System.out.println("you died");
+          System.out.println("play agian? (y or n)");
+
+          // choose to play again or not 
+          switch (scan.nextLine()) {
+            case "y":
+              playerAlive = 1;
+              break;
+            case "n":
+              playerAlive = 0;
+              System.out.println("thanks for playing");
+              break;
+            default:
+              System.out.println("please enter y or n");
+          }
+        }
+      }
+      // if the enemy is dead
+      else {
+        en1 = new Enemy();
+        en1.generateEnemy(pl1.getLevel());
+        System.out.println("a new enemy appears");
+      }
+    }
+  }
+  
+  
   // interpret user input
   public static boolean interpretInput(String input, Player pl1, Enemy en1) {
-    // use a switch to determine what to return based on input
+    // use a switch to determine what action to take based on user input
     switch (input.toLowerCase()) {
       case "help":
         System.out.println("type attack, health, or enemy health");
@@ -124,10 +136,10 @@ public class Main {
         System.out.println(playerAttack(pl1, en1));
         return true;
       case "health":
-        System.out.println(pl1.showHealth());
+        System.out.println("you have " + pl1.showHealth() + " health");
         return false;
       case "enemy health":
-        System.out.println(en1.showHealth());
+        System.out.println("Enemy has " + en1.showHealth() + " health");
         return false;
       default:
         System.out.println("input not understood");
@@ -155,8 +167,7 @@ public class Main {
       System.out.println("Enemy hits you for " + damage + " damage");
       if (pl1.showHealth() <= 0) {
         return 0;
-      }
-      else {
+      } else {
         return 1;
       }
     } else {
@@ -164,8 +175,8 @@ public class Main {
       return 1;
     }
   }
-  
-  
+
+
   // this is a header, the parenthesis contain a parameter
   public static void scannerDemo(Scanner scan) {
     System.out.println("enter an integer");
@@ -195,31 +206,31 @@ public class Main {
     System.out.println("Your substring is \"" + userSubstring + "\"");
   }
 
-  // a method to use anything in the psi2 requirements I didn't find a place for
+  // a method to use anything in the psi2 requirements I didn't find a convinient place for yet
   public static void psi2(Scanner scan) {
     System.out.println("enter two numbers");
     int num1 = scan.nextInt();
     int num2 = scan.nextInt();
     // multiplication
     System.out.println(num1 + " * " + num2 + " is equal to " + (num1 * num2));
-    
+
     // division
     System.out.println(num1 + " / " + num2 + " is equal to " + (num1 / num2));
-    
+
     // modulo
     System.out.println(num1 + " modulo " + num2 + " is equal to " + (num1 % num2));
-    
+
     // ++
     System.out.println(num1 + " and " + num2 + " plus 1 are " + ++num1 + " and " + ++num2);
-    
+
     // --
     System.out.println(num1 + " and " + num2 + " minus 1 are " + --num1 + " and " + --num2);
-    
+
     // ? is the ternary operator
-    String biggerOrSmaller = (num1 > num2) ? "your first number is bigger than second number" :
-      "your second number is bigger than first number";
+    String biggerOrSmaller = (num1 > num2) ? "your first number is bigger than second number"
+        : "your second number is bigger than first number";
     System.out.println(biggerOrSmaller);
-    
+
   }
 
 }
