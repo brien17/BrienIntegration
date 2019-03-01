@@ -37,6 +37,7 @@ public class Main {
     System.out.println("would you like to run integration or play game?");
     System.out.println("enter i for integration and g for game");
     int projectOrGame = 0;
+    // choose to run the project or the game
     while (projectOrGame == 0) {
       switch (scan.nextLine()) {
         case "i":
@@ -61,6 +62,7 @@ public class Main {
 
 
   }
+
   // run the game
   public static void runGame(Scanner scan) {
     // set the player as alive
@@ -71,7 +73,7 @@ public class Main {
     Enemy en1 = new Enemy();
     // generating stats for the player
     pl1.newPlayer();
-    // this is a call the parenthesis contain an argument
+    // this is a call and the parenthesis contain an argument
     // generating stats for the enemy
     en1.generateEnemy(pl1.getLevel());
     // always have something inside the loop that changes the condition
@@ -101,7 +103,7 @@ public class Main {
           System.out.println("you died");
           System.out.println("play agian? (y or n)");
 
-          // choose to play again or not 
+          // choose to play again or not
           switch (scan.nextLine()) {
             case "y":
               playerAlive = 1;
@@ -123,8 +125,8 @@ public class Main {
       }
     }
   }
-  
-  
+
+
   // interpret user input
   public static boolean interpretInput(String input, Player pl1, Enemy en1) {
     // use a switch to determine what action to take based on user input
@@ -217,12 +219,6 @@ public class Main {
     // division
     System.out.println(num1 + " / " + num2 + " is equal to " + (num1 / num2));
 
-    // modulo
-    System.out.println(num1 + " modulo " + num2 + " is equal to " + (num1 % num2));
-
-    // ++
-    System.out.println(num1 + " and " + num2 + " plus 1 are " + ++num1 + " and " + ++num2);
-
     // --
     System.out.println(num1 + " and " + num2 + " minus 1 are " + --num1 + " and " + --num2);
 
@@ -230,8 +226,49 @@ public class Main {
     String biggerOrSmaller = (num1 > num2) ? "your first number is bigger than second number"
         : "your second number is bigger than first number";
     System.out.println(biggerOrSmaller);
+    // +=
+    int sum = 0;
+    sum += num1 + num2;
+    System.out.println(num1 + " plus " + num2 + " is " + sum);
 
+    // math class
+    System.out.println(
+        num1 + " squared " + num2 + " squared are " + Math.pow(num1, 2) + " " + Math.pow(num2, 2));
+
+    // conditional operator
+    if (num1 > 0 && num1 < 100) {
+      System.out.println("all prime numbers smaller than your number are");
+      boolean prime = true;
+      // for loop
+      // ++
+      for (int i = 0; i < num1; i++) {
+        prime = true;
+        for (int j = 2; j < i; j++) {
+          // %
+          if (i % j == 0) {
+            prime = false;
+            // break ends the execution of a loop and runs the code just below the loop
+            break;
+
+          }
+        }
+        if (prime == false) {
+          // continue skips the current iteration of a loop, but does not terminate a loop
+          continue;
+        }
+        System.out.println(i);
+      }
+    }
+    // compare to
+    String example1 = "hello";
+    String example2 = "hello";
+    int same = example1.compareTo(example2);
+    boolean equals = example1.equals(example2);
+    // using the == operator to compare strings doesn't compare their content but actually compares
+    // the location in memory of the two strings
   }
+  // operator precedence is the order in which operations will be done if there are more than one
+  // operation on a line
 
 }
 

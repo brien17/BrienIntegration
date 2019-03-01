@@ -1,7 +1,7 @@
 import java.util.Random;
 
 // Cameron Brien
-// class used in my main program
+// class used to model the player character
 
 public class Player {
   //fields
