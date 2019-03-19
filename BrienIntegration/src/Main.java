@@ -1,6 +1,5 @@
 import java.util.Scanner;
 
-
 // Cameron Brien
 // A program to show skills learned in COP 2006.
 
@@ -14,7 +13,6 @@ public class Main {
   // main is the method name
   public static void main(String[] args) {
 
-    System.out.println("Welcome to my program");
     /*
      * description of data types 1. Byte - An 8-bit datatype that can be useful for memory saving in
      * large arrays due to its small size. 2. Short - A 16-bit datatype that can be used to save
@@ -29,9 +27,9 @@ public class Main {
      * 
      * scope determines what will have access to a variable
      */
-    /*
-    
-     */
+
+    // greet the user
+    System.out.println("Welcome to my program");
     // create a scanner object
     Scanner scan = new Scanner(System.in);
     System.out.println("would you like to run integration or play game?");
@@ -52,6 +50,7 @@ public class Main {
     }
     // if they want to play the game
     if (projectOrGame == 2) {
+      // this is a call and the parenthesis contain an argument
       runGame(scan);
     }
     // run the integration demo
@@ -59,23 +58,21 @@ public class Main {
       scannerDemo(scan);
       psi2(scan);
     }
-
-
   }
 
   // run the game
   public static void runGame(Scanner scan) {
+
     // set the player as alive
     int playerAlive = 1;
     // creating the player object
     Player pl1 = new Player();
     // creating an enemy object
-    Enemy en1 = new Enemy();
-    // generating stats for the player
-    pl1.newPlayer();
-    // this is a call and the parenthesis contain an argument
-    // generating stats for the enemy
-    en1.generateEnemy(pl1.getLevel());
+    Enemy en1 = new Enemy(1);
+    // Setting the class for the player
+    setpc(scan, pl1);
+    // Setting the stats based on class
+    pl1.setStats(pl1.getPlayerClass());
     // always have something inside the loop that changes the condition
     while (playerAlive == 1) {
 
@@ -119,13 +116,12 @@ public class Main {
       }
       // if the enemy is dead
       else {
-        en1 = new Enemy();
-        en1.generateEnemy(pl1.getLevel());
+        int level = pl1.getLevel();
+        en1 = new Enemy(level);
         System.out.println("a new enemy appears");
       }
     }
   }
-
 
   // interpret user input
   public static boolean interpretInput(String input, Player pl1, Enemy en1) {
@@ -147,6 +143,28 @@ public class Main {
         System.out.println("input not understood");
         return false;
     }
+  }
+  
+  // set players class
+  public static void setpc(Scanner scan, Player pl1) {
+    boolean end = false;
+    do {
+      System.out.println("enter the class you want or help for list of classes");
+      String input = scan.nextLine();
+      switch(input.toLowerCase()) {
+        case "help":
+          
+        case "0":
+          pl1.setPlayerClass("0");
+          System.out.println("you are now a " + pl1.getPlayerClass());
+          end = true;
+          break;
+        default:
+          System.out.println("input not understood");
+      }
+      
+    }
+    while(end == false);
   }
 
   // player attack
@@ -177,7 +195,6 @@ public class Main {
       return 1;
     }
   }
-
 
   // this is a header, the parenthesis contain a parameter
   public static void scannerDemo(Scanner scan) {
@@ -264,6 +281,7 @@ public class Main {
     String example2 = "hello";
     int same = example1.compareTo(example2);
     boolean equals = example1.equals(example2);
+    System.out.println("" + same + equals);
     // using the == operator to compare strings doesn't compare their content but actually compares
     // the location in memory of the two strings
   }

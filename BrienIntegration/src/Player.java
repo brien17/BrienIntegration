@@ -5,20 +5,34 @@ import java.util.Random;
 
 public class Player {
   //fields
-  int health;
-  int level;
-  int damageModifier;
-  int accuracyModifier;
-  
-  
+  private int health;
+  private int level;
+  private int damageModifier;
+  private int accuracyModifier;
+  private String playerClass;
   //methods
   
-  // generate a new player
-  public void newPlayer() {
-    health = 10;
-    level = 1;
-    damageModifier = 1;
-    accuracyModifier = 1;
+  // constructor for player class
+  public void setStats(String pc) {
+    switch(pc) {
+      case "0":
+        health = 100;
+        level = 1;
+        damageModifier = 10;
+        accuracyModifier = 10;
+        break;
+        
+    }
+  }
+  
+  // set the class
+  public void setPlayerClass(String playerClass) {
+    this.playerClass = playerClass;
+  }
+  
+  // get the class
+  public String getPlayerClass() {
+    return playerClass;
   }
   
   // display the players health
@@ -40,16 +54,15 @@ public class Player {
     // use of random class
     Random rand = new Random();
     // determine if the player hits
-    int hit = rand.nextInt(3 + accuracyModifier);
+    int hit = rand.nextInt(30 + accuracyModifier);
     // check that the player hits
-    if(hit > 0) {
+    if(hit > 10) {
       // calculate and return damage
-      int damage = rand.nextInt(2) + damageModifier;
+      int damage = rand.nextInt(20) + damageModifier;
       return damage;
     }
     else {
       return 0;
     }
   }
-
 }

@@ -5,18 +5,11 @@ import java.util.Random;
 
 public class Enemy {
   //fields
-  int health;
-  int damageModifier;
-  int accuracyModifier;
+  private int health;
+  private int damageModifier;
+  private int accuracyModifier;
   
   //methods
-  
-  // generate a new enemy
-  public void generateEnemy(int playerLevel) {
-    health = 3 + playerLevel;
-    damageModifier = playerLevel;
-    accuracyModifier = playerLevel;
-  }
   
   // display the enemies health
   public int showHealth() {
@@ -33,16 +26,21 @@ public class Enemy {
     // use of the random class
     Random rand = new Random();
     // check if the enemy hits
-    int hit = rand.nextInt(2 + accuracyModifier);
+    int hit = rand.nextInt(20 + accuracyModifier);
     // only do damage if the enemy hits
-    if(hit > 0) {
+    if(hit > 10) {
       // get the enemy damage
-      int damage = rand.nextInt(2) + damageModifier;
+      int damage = rand.nextInt(20) + damageModifier;
       return damage;
     }
     else {
       return 0;
     }
   }
-    
+  // constructor for enemy class
+  public Enemy(int playerLevel) {
+    health = 30 + playerLevel;
+    damageModifier = playerLevel * 10;
+    accuracyModifier = playerLevel * 10;
+  }
 }
