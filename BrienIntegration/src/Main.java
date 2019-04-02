@@ -58,6 +58,7 @@ public class Main {
       scannerDemo(scan);
       psi2(scan);
     }
+
   }
 
   // run the game
@@ -66,13 +67,11 @@ public class Main {
     // set the player as alive
     int playerAlive = 1;
     // creating the player object
-    Player pl1 = new Player();
+    Player pl1 = new Player(); 
     // creating an enemy object
     Enemy en1 = new Enemy(1);
     // Setting the class for the player
     setpc(scan, pl1);
-    // Setting the stats based on class
-    pl1.setStats(pl1.getPlayerClass());
     // always have something inside the loop that changes the condition
     while (playerAlive == 1) {
 

@@ -10,12 +10,21 @@ public class Player {
   private int damageModifier;
   private int accuracyModifier;
   private String playerClass;
-  //methods
+  private String[] inventory = new String[10];
   
-  // constructor for player class
-  public void setStats(String pc) {
+  //methods
+  public Player() {
+    // setting the players inventory to empty
+    for(int i = 0 ; i < inventory.length; i++) {
+      inventory[i] = "Empty";  
+    }
+  }
+  
+  // sets the stats for player class
+  public void setPlayerClass(String pc) {
     switch(pc) {
       case "0":
+        this.playerClass = "0";
         health = 100;
         level = 1;
         damageModifier = 10;
@@ -23,11 +32,6 @@ public class Player {
         break;
         
     }
-  }
-  
-  // set the class
-  public void setPlayerClass(String playerClass) {
-    this.playerClass = playerClass;
   }
   
   // get the class
@@ -63,6 +67,29 @@ public class Player {
     }
     else {
       return 0;
+    }
+  }
+  
+  // clears the inventory
+  public void clearInventory() {
+    for(int i = 0 ; i < inventory.length; i++) {
+      inventory[i] = "Empty";
+    }
+  }
+  
+  // returns the inventory
+  public String getInventoryAt(int position) {
+    return inventory[position];
+  }
+  // shows the inventory
+  public void showInventory() {
+    for(int i = 0 ; i < inventory.length; i++) {
+      if(i == inventory.length - 1){
+        System.out.print(inventory[i]);
+      }
+      else {
+        System.out.print(inventory[i] + ", ");
+      }
     }
   }
 }
