@@ -22,16 +22,7 @@ public class Player {
   
   // sets the stats for player class
   public void setPlayerClass(String pc) {
-    switch(pc) {
-      case "0":
-        this.playerClass = "0";
-        health = 100;
-        level = 1;
-        damageModifier = 10;
-        accuracyModifier = 10;
-        break;
-        
-    }
+    playerClass = pc;
   }
   
   // get the class
@@ -77,19 +68,22 @@ public class Player {
     }
   }
   
-  // returns the inventory
+  // print the entire inventory
+  public void printInventory() {
+    for(String item: inventory) {
+      System.out.print(item + " ");
+    }
+  }
+  
+  // returns the inventory at a position
   public String getInventoryAt(int position) {
     return inventory[position];
   }
+  
   // shows the inventory
   public void showInventory() {
-    for(int i = 0 ; i < inventory.length; i++) {
-      if(i == inventory.length - 1){
-        System.out.print(inventory[i]);
-      }
-      else {
-        System.out.print(inventory[i] + ", ");
-      }
+    for(String item: inventory){
+      System.out.println(item + " ");
     }
   }
 }

@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 // Cameron Brien
@@ -127,7 +129,7 @@ public class Main {
     // use a switch to determine what action to take based on user input
     switch (input.toLowerCase()) {
       case "help":
-        System.out.println("type attack, health, or enemy health");
+        System.out.println("type attack, health, enemy health, or check inventory");
         return false;
       case "attack":
         System.out.println(playerAttack(pl1, en1));
@@ -138,6 +140,8 @@ public class Main {
       case "enemy health":
         System.out.println("Enemy has " + en1.showHealth() + " health");
         return false;
+      case "check inventory":
+        pl1.printInventory();
       default:
         System.out.println("input not understood");
         return false;
@@ -146,24 +150,10 @@ public class Main {
   
   // set players class
   public static void setpc(Scanner scan, Player pl1) {
-    boolean end = false;
-    do {
-      System.out.println("enter the class you want or help for list of classes");
-      String input = scan.nextLine();
-      switch(input.toLowerCase()) {
-        case "help":
-          
-        case "0":
-          pl1.setPlayerClass("0");
-          System.out.println("you are now a " + pl1.getPlayerClass());
-          end = true;
-          break;
-        default:
-          System.out.println("input not understood");
-      }
-      
-    }
-    while(end == false);
+    System.out.println("enter the class you want (you can be anything you want, it does not affect gameplay)");
+    String input = scan.nextLine();
+    pl1.setPlayerClass(input);
+    System.out.println("you are now a " + pl1.getPlayerClass());    
   }
 
   // player attack
@@ -175,7 +165,6 @@ public class Main {
     } else {
       return "You missed";
     }
-
   }
 
   // enemy attack
@@ -198,9 +187,29 @@ public class Main {
   // this is a header, the parenthesis contain a parameter
   public static void scannerDemo(Scanner scan) {
     System.out.println("enter an integer");
-    int userInt = scan.nextInt();
+    int userInt = 0;
+    boolean goodInput = false;
+    while(goodInput==false) {
+      try {
+        userInt = scan.nextInt();
+        goodInput = true;
+      } catch(InputMismatchException ex) {
+        System.out.println("you must enter a whole number, please try again");
+        scan.nextLine();
+      }
+    }
     System.out.println("enter a double");
-    double userDouble = scan.nextDouble();
+    goodInput = false;
+    double userDouble = 0;
+    while(goodInput==false) {
+      try {
+        userDouble = scan.nextDouble();
+        goodInput = true;
+      } catch(InputMismatchException ex) {
+        System.out.println("you may enter a number with a decimal, please try again");
+        scan.nextLine();
+      }
+    }
     /*
      * in a scanner nextline doesn't work after a next with any type of number so you have to clear
      * it out by entering nextline twice
@@ -218,17 +227,50 @@ public class Main {
 
     System.out.println("enter a starting number and an ending number to get make a substring from "
         + "your string");
-    int start = scan.nextInt();
-    int end = scan.nextInt();
-    String userSubstring = userString.substring(start, end);
+    int start = 0;
+    int end = 0;
+    String userSubstring = "";
+    goodInput = false;
+    while(goodInput == false) {
+      try {
+        start = scan.nextInt();
+        end = scan.nextInt();
+        userSubstring = userString.substring(start, end);
+        goodInput = true;
+      } catch(InputMismatchException ex) {
+        System.out.println("you must enter a whole number, please try again");
+        scan.nextLine();
+      } catch(IndexOutOfBoundsException ex) {
+        System.out.println("The numbers you have entered cannot be used to make a substring out of "
+            + "your string, please try again");
+        scan.nextLine();
+      }
+    }
     System.out.println("Your substring is \"" + userSubstring + "\"");
   }
 
-  // a method to use anything in the psi2 requirements I didn't find a convinient place for yet
+  // a method to use anything in the psi2 requirements I didn't find a convenient place for yet
   public static void psi2(Scanner scan) {
-    System.out.println("enter two numbers");
-    int num1 = scan.nextInt();
-    int num2 = scan.nextInt();
+    System.out.println("enter two whole numbers greater than zero");
+    boolean goodInput1 = false;
+    int num1 = 1;
+    int num2 = 1;
+    while(goodInput1 == false) {
+      try {
+        num1 = scan.nextInt();
+        num2 = scan.nextInt();
+        if(num1 <= 0 || num2 < 0) {
+          throw new Exception();
+        } 
+        goodInput1 = true;
+      } catch(InputMismatchException ex) {
+        System.out.println("you must enter a whole number, please try again");
+        scan.nextLine();
+      } catch(Exception ex) {
+        System.out.println("numbers must be greater than zero, please try again");
+        scan.nextLine();
+      }
+    }
     // multiplication
     System.out.println(num1 + " * " + num2 + " is equal to " + (num1 * num2));
 
@@ -237,7 +279,8 @@ public class Main {
 
     // --
     System.out.println(num1 + " and " + num2 + " minus 1 are " + --num1 + " and " + --num2);
-
+    num1++;
+    num2++;
     // ? is the ternary operator
     String biggerOrSmaller = (num1 > num2) ? "your first number is bigger than second number"
         : "your second number is bigger than first number";
@@ -249,15 +292,16 @@ public class Main {
 
     // math class
     System.out.println(
-        num1 + " squared " + num2 + " squared are " + Math.pow(num1, 2) + " " + Math.pow(num2, 2));
+        num1 + " squared is " + Math.pow(num1, 2));
 
     // conditional operator
-    if (num1 > 0 && num1 < 100) {
-      System.out.println("all prime numbers smaller than your number are");
+    if (num1 > 2) {
+      System.out.println("all prime numbers smaller than your first number are");
+      ArrayList<Integer> primes = new ArrayList<Integer>();
       boolean prime = true;
       // for loop
       // ++
-      for (int i = 0; i < num1; i++) {
+      for (int i = 2; i < num1; i++) {
         prime = true;
         for (int j = 2; j < i; j++) {
           // %
@@ -272,18 +316,52 @@ public class Main {
           // continue skips the current iteration of a loop, but does not terminate a loop
           continue;
         }
-        System.out.println(i);
+        primes.add(i);
       }
+      for(int primeNumber: primes) {
+        System.out.println(primeNumber);
+      }
+    }
+    else{
+      System.out.println("there are no prime numbers smaller than your number");
     }
     // compare to
     String example1 = "hello";
     String example2 = "hello";
     int same = example1.compareTo(example2);
     boolean equals = example1.equals(example2);
-    System.out.println("" + same + equals);
     // using the == operator to compare strings doesn't compare their content but actually compares
     // the location in memory of the two strings
+    System.out.println("enter 5 whole numbers");
+    goodInput1 = false;
+    int userInt1 = 1;
+    int userInt2 = 1;
+    int userInt3 = 1;
+    int userInt4 = 1;
+    int userInt5 = 1;
+    while(goodInput1 == false) {
+      try {
+        userInt1 = scan.nextInt();
+        userInt2 = scan.nextInt();
+        userInt3 = scan.nextInt();
+        userInt4 = scan.nextInt();
+        userInt5 = scan.nextInt();
+        goodInput1 = true;
+      } catch(InputMismatchException ex) {
+        System.out.println("you must enter a whole number, please try again");
+        scan.nextLine();
+      }
+    }
+    int[] userArray = {userInt1, userInt2, userInt3, userInt4, userInt5};
+    int smallest = userArray[0];
+    for(int number:userArray) {
+      if(number < smallest) {
+        smallest = number;
+      }
+    }
+    System.out.println("the smallest number in your array is " + smallest);
   }
+
   // operator precedence is the order in which operations will be done if there are more than one
   // operation on a line
 
