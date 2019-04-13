@@ -481,7 +481,7 @@ public class Main {
     }
     
     Random rand = new Random();
-    int[][] twoDArray = new int[9][2];
+    int[][] twoDArray = new int[5][5];
     for(int row = 0; row < twoDArray.length; row++) {
       for(int col = 0; col < twoDArray[row].length; col++) {
         twoDArray[row][col] = rand.nextInt(20);
@@ -497,6 +497,7 @@ public class Main {
           foundValue = true;
           rowFound = row;
           colFound = col;
+          break;
         }
       }
     }

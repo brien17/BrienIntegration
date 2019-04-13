@@ -13,7 +13,7 @@ public class Player {
   private String[] inventory = new String[10];
   
   //methods
-  //constructor
+  //constructor for the player class
   public Player() {
     // setting the players inventory to empty
     for(int i = 0 ; i < inventory.length; i++) {
