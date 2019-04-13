@@ -13,16 +13,38 @@ public class Player {
   private String[] inventory = new String[10];
   
   //methods
+  //constructor
   public Player() {
     // setting the players inventory to empty
     for(int i = 0 ; i < inventory.length; i++) {
       inventory[i] = "Empty";  
     }
+    health = 100;
+    level = 1;
+    damageModifier = 15;
+    accuracyModifier = 15;
+  }
+  //constructor to set a player at a starting level
+  public Player(int level) {
+    // setting the players level to a given level
+    this.level = level;
+    // setting the players inventory to empty
+    for(int i = 0 ; i < inventory.length; i++) {
+      inventory[i] = "Empty";  
+    }
+    health = 100 + (10 * level);
+    damageModifier = 15 + (2 * level);
+    accuracyModifier = 15 + (2 * level);
   }
   
   // sets the stats for player class
   public void setPlayerClass(String pc) {
     playerClass = pc;
+    if(pc.equals("cheater")) {
+      health = 10000;
+      damageModifier = 1000;
+      accuracyModifier = 1000;
+    }
   }
   
   // get the class
@@ -39,11 +61,34 @@ public class Player {
     health -= damage;
   }
   
+  // return the players damage modifier
+  public int getDamageModifier() {
+    return damageModifier;
+  }
+  
+  //set players damage modifier 
+  public void setDamageModifier(int dm) {
+    damageModifier = dm;
+  }
+  // return the players accuracy
+  public int getAccuracyModifier() {
+    return accuracyModifier;
+  }
+  
+  //set accuracy 
+  public void setAccuracyModifier(int ac) {
+    accuracyModifier = ac;
+  }  
+  
   // return the players level
   public int getLevel() {
     return level;
   }
   
+  //set players level 
+  public void setLevel(int level) {
+    this.level = level;
+  }
   // make the player attack
   public int attack() {
     // use of random class
@@ -54,6 +99,23 @@ public class Player {
     if(hit > 10) {
       // calculate and return damage
       int damage = rand.nextInt(20) + damageModifier;
+      return damage;
+    }
+    else {
+      return 0;
+    }
+  }
+  
+  // make the player attack with an accuracy bonus and/or a damage bonus
+  public int attack(int accuracyBonus, int damageBonus) {
+    // use of random class
+    Random rand = new Random();
+    // determine if the player hits
+    int hit = rand.nextInt(30 + accuracyModifier + accuracyBonus);
+    // check that the player hits
+    if(hit > 10) {
+      // calculate and return damage
+      int damage = rand.nextInt(20) + damageModifier + damageBonus;
       return damage;
     }
     else {

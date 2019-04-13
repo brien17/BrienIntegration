@@ -5,9 +5,9 @@ import java.util.Random;
 
 public class Enemy {
   //fields
-  private int health;
-  private int damageModifier;
-  private int accuracyModifier;
+  protected int health;
+  protected int damageModifier;
+  protected int accuracyModifier;
   
   //methods
   
