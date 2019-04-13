@@ -217,7 +217,7 @@ public class Main {
         System.out.println("Enemy has " + en1.showHealth() + " health");
         return false;
       case "check inventory":
-        pl1.printInventory();
+        pl1.showInventory();
         return false;
       default:
         System.out.println("input not understood");
@@ -227,7 +227,7 @@ public class Main {
   
   // set players class
   public static void setpc(Scanner scan, Player pl1) {
-    System.out.println("enter the class you want (you can be anything you want, it does not affect gameplay)");
+    System.out.println("enter the class you want (you can type anything you want, it does not affect gameplay)");
     String input = scan.nextLine();
     pl1.setPlayerClass(input);
     System.out.println("you are now a " + pl1.getPlayerClass());    
