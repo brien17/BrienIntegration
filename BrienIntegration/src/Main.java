@@ -3,17 +3,27 @@ import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
-// Cameron Brien
 // A program to show skills learned in COP 2006.
 
+/**
+ * The main method for my program that runs the game and integration methods.
+ * 
+ * @author Cameron Brien
+ */
 public class Main {
   // final is a keyword that makes it so a variable is immutable
-  final int START = 12;
+  static final int START = 12;
 
   // this is a header
   // public is an access modifier
   // void is the return type (it has no return)
   // main is the method name
+
+  /**
+   * The main method for my program that runs the game and integration methods.
+   * 
+   * @param args args for the main method
+   */
   public static void main(String[] args) {
 
     /*
@@ -32,53 +42,60 @@ public class Main {
      */
     runProgram();
   }
-  
-    public static void runProgram() {
-      // greet the user
-      System.out.println("Welcome to my program");
-      // create a scanner object
-      Scanner scan = new Scanner(System.in);
-      System.out.println("would you like to run integration or play game?");
-      System.out.println("enter i for integration and g for game");
-      int projectOrGame = 0;
-      // choose to run the project or the game
-      while (projectOrGame == 0) {
-        switch (scan.nextLine()) {
-          case "i":
-            projectOrGame = 1;
-            break;
-          case "g":
-            projectOrGame = 2;
-            break;
-          default:
-            System.out.println("input not understood");
-        }
+
+  /**
+   * This method allows the user to choose between running the integration portion of the project or
+   * the game portion and runs those methods.
+   */
+  public static void runProgram() {
+    // greet the user
+    System.out.println("Welcome to my program");
+    // create a scanner object
+    Scanner scan = new Scanner(System.in);
+    System.out.println("would you like to run integration or play game?");
+    System.out.println("enter i for integration or g for game then hit enter");
+    int projectOrGame = 0;
+    // choose to run the project or the game
+    while (projectOrGame == 0) {
+      switch (scan.nextLine()) {
+        case "i":
+          projectOrGame = 1;
+          break;
+        case "g":
+          projectOrGame = 2;
+          break;
+        default:
+          System.out.println("input not understood");
       }
-      // if they want to play the game
-      if (projectOrGame == 2) {
-        // this is a call and the parenthesis contain an argument
-        runGame(scan);
-      }
+    }
+    // if they want to play the game
+    if (projectOrGame == 2) {
+      // this is a call and the parenthesis contain an argument
+      runGame(scan);
       // run the integration demo
-      else if (projectOrGame == 1) {
-        scannerDemo(scan);
-        psi2(scan);
-      }
+    } else if (projectOrGame == 1) {
+      scannerDemo(scan);
+      psi2(scan);
+    }
   }
 
-  // run the game
+  /**
+   * This method initializes the game variables and uses other methods to allow the user to play the
+   * game using a scanner.
+   * 
+   * @param scan a scanner object to get input from the player
+   */
   public static void runGame(Scanner scan) {
     // set the player as alive
     int playerAlive = 1;
     // creating the player object
-    Player pl1 = new Player(); 
+    Player pl1 = new Player();
     // creating an enemy array
     Enemy[] enemyArray = new Enemy[5];
-    for(int i = 0; i < 5; i++) {
-      if(i < 4) {  
+    for (int i = 0; i < 5; i++) {
+      if (i < 4) {
         enemyArray[i] = new Enemy(1);
-      }
-      else {
+      } else {
         enemyArray[i] = new StrongEnemy(1);
       }
     }
@@ -98,7 +115,7 @@ public class Main {
       // this loop lets the player make certain actions without ending the turn
       do {
         // get player input
-        System.out.println("Enter an Action or help");
+        System.out.println("Enter an action or help for a list of actions then press enter");
         String input = scan.nextLine();
 
         // make an action and determine if the player's turn is over or not
@@ -123,13 +140,12 @@ public class Main {
               // set the player as alive
               playerAlive = 1;
               // creating the player object
-              pl1 = new Player(); 
+              pl1 = new Player();
               // resetting the enemy array
-              for(int i = 0; i < 5; i++) {
-                if(i < 4) {  
+              for (int i = 0; i < 5; i++) {
+                if (i < 4) {
                   enemyArray[i] = new Enemy(1);
-                }
-                else {
+                } else {
                   enemyArray[i] = new StrongEnemy(1);
                 }
               }
@@ -155,13 +171,12 @@ public class Main {
         try {
           enemyNumber++;
           en1 = enemyArray[enemyNumber];
-          if(enemyNumber == enemyArray.length -1) {
+          if (enemyNumber == enemyArray.length - 1) {
             System.out.println("a strong enemy appears");
-          }
-          else { 
+          } else {
             System.out.println("a new enemy appears");
           }
-        } catch(IndexOutOfBoundsException ex) {
+        } catch (IndexOutOfBoundsException ex) {
           System.out.println("you win!");
           System.out.println("play agian? (y or n)");
           // choose to play again or not
@@ -170,13 +185,12 @@ public class Main {
               // set the player as alive
               playerAlive = 1;
               // creating the player object
-              pl1 = new Player(); 
+              pl1 = new Player();
               // resetting the enemy array
-              for(int i = 0; i < 5; i++) {
-                if(i < 4) {  
+              for (int i = 0; i < 5; i++) {
+                if (i < 4) {
                   enemyArray[i] = new Enemy(1);
-                }
-                else {
+                } else {
                   enemyArray[i] = new StrongEnemy(1);
                 }
               }
@@ -201,11 +215,20 @@ public class Main {
   }
 
   // interpret user input
+  /**
+   * This method takes in an input from the player and performs an action based on the input
+   * received, then outputs a boolean indicating if the action ends the players turn or not.
+   * 
+   * @param input Input gotten from the player
+   * @param pl1 The Player object
+   * @param en1 The current Enemy object
+   * @return A boolean telling if the players turn is over or not This method takes in an input from
+   */
   public static boolean interpretInput(String input, Player pl1, Enemy en1) {
     // use a switch to determine what action to take based on user input
     switch (input.toLowerCase()) {
       case "help":
-        System.out.println("type attack, health, enemy health, or check inventory");
+        System.out.println("type attack, health, enemy health, health potion, or check inventory");
         return false;
       case "attack":
         System.out.println(playerAttack(pl1, en1));
@@ -219,21 +242,38 @@ public class Main {
       case "check inventory":
         pl1.showInventory();
         return false;
+      case "health potion":
+        return pl1.useHealthPotion();
       default:
         System.out.println("input not understood");
         return false;
     }
   }
-  
+
   // set players class
+  /**
+   * Allows the player to set their class (currently unused).
+   * 
+   * @param scan Scanner to get input from the player
+   * @param pl1 Player object
+   */
   public static void setpc(Scanner scan, Player pl1) {
-    System.out.println("enter the class you want (you can type anything you want, it does not affect gameplay)");
+    System.out.println(
+        "enter the class you want (you can type anything you want, it does not affect gameplay)");
     String input = scan.nextLine();
     pl1.setPlayerClass(input);
-    System.out.println("you are now a " + pl1.getPlayerClass());    
+    System.out.println("you are now a " + pl1.getPlayerClass());
   }
 
-  // player attack
+
+  /**
+   * Uses to player's attack method and the enemie's take damage method to have the player attack,
+   * then returns a string describing the results.
+   * 
+   * @param pl1 The Player object
+   * @param en1 The current Enemy object
+   * @return A string describing the results of the method
+   */
   public static String playerAttack(Player pl1, Enemy en1) {
     int damage = pl1.attack();
     if (damage > 0) {
@@ -244,7 +284,15 @@ public class Main {
     }
   }
 
-  // enemy attack
+
+  /**
+   * Uses to enemie's attack method and the player's take damage method to have the enemy attack,
+   * then returns a string describing the results.
+   * 
+   * @param pl1 The Player object
+   * @param en1 The current Enemy object
+   * @return A string describing the results of the method
+   */
   public static int enemyAttack(Player pl1, Enemy en1) {
     int damage = en1.attack();
     if (damage > 0) {
@@ -261,16 +309,22 @@ public class Main {
     }
   }
 
+  /**
+   * A method that runs a variety of different requirements for the integration project that I did
+   * not find a way to fit conveniently into my game.
+   * 
+   * @param scan Scanner to get input from the user
+   */
   // this is a header, the parenthesis contain a parameter
   public static void scannerDemo(Scanner scan) {
     System.out.println("enter an integer");
     int userInt = 0;
     boolean goodInput = false;
-    while(goodInput==false) {
+    while (goodInput == false) {
       try {
         userInt = scan.nextInt();
         goodInput = true;
-      } catch(InputMismatchException ex) {
+      } catch (InputMismatchException ex) {
         System.out.println("you must enter a whole number, please try again");
         scan.nextLine();
       }
@@ -278,11 +332,11 @@ public class Main {
     System.out.println("enter a double");
     goodInput = false;
     double userDouble = 0;
-    while(goodInput==false) {
+    while (goodInput == false) {
       try {
         userDouble = scan.nextDouble();
         goodInput = true;
-      } catch(InputMismatchException ex) {
+      } catch (InputMismatchException ex) {
         System.out.println("you may enter a number with a decimal, please try again");
         scan.nextLine();
       }
@@ -308,16 +362,16 @@ public class Main {
     int end = 0;
     String userSubstring = "";
     goodInput = false;
-    while(goodInput == false) {
+    while (goodInput == false) {
       try {
         start = scan.nextInt();
         end = scan.nextInt();
         userSubstring = userString.substring(start, end);
         goodInput = true;
-      } catch(InputMismatchException ex) {
+      } catch (InputMismatchException ex) {
         System.out.println("you must enter a whole number, please try again");
         scan.nextLine();
-      } catch(IndexOutOfBoundsException ex) {
+      } catch (IndexOutOfBoundsException ex) {
         System.out.println("The numbers you have entered cannot be used to make a substring out of "
             + "your string, please try again");
         scan.nextLine();
@@ -326,24 +380,29 @@ public class Main {
     System.out.println("Your substring is \"" + userSubstring + "\"");
   }
 
-  // a method to use anything in the psi2 requirements I didn't find a convenient place for yet
+  /**
+   * A method that runs even more requirements for the integration project that I did not find a way
+   * to fit conveniently into my game.
+   * 
+   * @param scan Scanner to get input from the user
+   */
   public static void psi2(Scanner scan) {
     System.out.println("enter two whole numbers greater than zero");
     boolean goodInput1 = false;
     int num1 = 1;
     int num2 = 1;
-    while(goodInput1 == false) {
+    while (goodInput1 == false) {
       try {
         num1 = scan.nextInt();
         num2 = scan.nextInt();
-        if(num1 <= 0 || num2 < 0) {
+        if (num1 <= 0 || num2 < 0) {
           throw new Exception();
-        } 
+        }
         goodInput1 = true;
-      } catch(InputMismatchException ex) {
+      } catch (InputMismatchException ex) {
         System.out.println("you must enter a whole number, please try again");
         scan.nextLine();
-      } catch(Exception ex) {
+      } catch (Exception ex) {
         System.out.println("numbers must be greater than zero, please try again");
         scan.nextLine();
       }
@@ -355,26 +414,25 @@ public class Main {
     System.out.println(num1 + " / " + num2 + " is equal to " + (num1 / num2));
     // operator precedence is the order in which operations will be done if there are more than one
     // operation on a line
-    
+
     // --
     System.out.println(num1 + " and " + num2 + " minus 1 are " + --num1 + " and " + --num2);
     // resetting the values of num1 and num2
     num1++;
     num2++;
-    
+
     // ? is the ternary operator
     String biggerOrSmaller = (num1 > num2) ? "your first number is bigger than second number"
         : "your second number is bigger than first number";
     System.out.println(biggerOrSmaller);
-    
+
     // +=
     int sum = 0;
     sum += num1 + num2;
     System.out.println(num1 + " plus " + num2 + " is " + sum);
 
     // math class
-    System.out.println(
-        num1 + " squared is " + Math.pow(num1, 2));
+    System.out.println(num1 + " squared is " + Math.pow(num1, 2));
 
     // conditional operator
     if (num1 > 2) {
@@ -400,11 +458,10 @@ public class Main {
         }
         primes.add(i);
       }
-      for(int primeNumber: primes) {
+      for (int primeNumber : primes) {
         System.out.println(primeNumber);
       }
-    }
-    else{
+    } else {
       System.out.println("there are no prime numbers smaller than your number");
     }
     // compare to
@@ -414,7 +471,13 @@ public class Main {
     boolean equals = example1.equals(example2);
     // using the == operator to compare strings doesn't compare their content but actually compares
     // the location in memory of the two strings
-    
+    if (same >= 5) {
+      System.out.println("error");
+    }
+    if (equals != true) {
+      System.out.println("error");
+    }
+
     // getting values to make an array of user input numbers
     System.out.println("enter 5 whole numbers");
     goodInput1 = false;
@@ -423,7 +486,7 @@ public class Main {
     int userInt3 = 1;
     int userInt4 = 1;
     int userInt5 = 1;
-    while(goodInput1 == false) {
+    while (goodInput1 == false) {
       try {
         userInt1 = scan.nextInt();
         userInt2 = scan.nextInt();
@@ -431,68 +494,68 @@ public class Main {
         userInt4 = scan.nextInt();
         userInt5 = scan.nextInt();
         goodInput1 = true;
-      } catch(InputMismatchException ex) {
+      } catch (InputMismatchException ex) {
         System.out.println("you must enter a whole number, please try again");
         scan.nextLine();
       }
     }
     // creating an array from user input
     int[] userArray = {userInt1, userInt2, userInt3, userInt4, userInt5};
-    // finding the smallest value in that array 
+    // finding the smallest value in that array
     int smallest = userArray[0];
-    for(int number:userArray) {
-      if(number < smallest) {
+    for (int number : userArray) {
+      if (number < smallest) {
         smallest = number;
       }
     }
     System.out.println("the smallest number in your array is " + smallest);
-    // summing all of the elements in an array 
+    // summing all of the elements in an array
     int accum = 0;
-    for(int number:userArray) {
+    for (int number : userArray) {
       accum += number;
     }
     System.out.println("the sum of all of the numbers in your array is " + accum);
-    
+
     // finding a value in an array
     System.out.println("enter your favorite number");
     goodInput1 = false;
     int favNum = 0;
-    while(goodInput1 == false) {
+    while (goodInput1 == false) {
       try {
         favNum = scan.nextInt();
         goodInput1 = true;
-      } catch(InputMismatchException ex) {
+      } catch (InputMismatchException ex) {
         System.out.println("you must enter a whole number, please try again");
         scan.nextLine();
       }
     }
     // searching the array for their favorite number
     boolean inArray = false;
-    for(int number:userArray) {
-      if(number == favNum) {
+    for (int number : userArray) {
+      if (number == favNum) {
         inArray = true;
       }
     }
-    if(inArray == true) {
+    if (inArray == true) {
       System.out.println("your array has your favorite number");
-    }
-    else {
+    } else {
       System.out.println("your array doesn't have your favorite number");
     }
-    
+    // filling a 2D array with random values
     Random rand = new Random();
     int[][] twoDArray = new int[5][5];
-    for(int row = 0; row < twoDArray.length; row++) {
-      for(int col = 0; col < twoDArray[row].length; col++) {
+    for (int row = 0; row < twoDArray.length; row++) {
+      for (int col = 0; col < twoDArray[row].length; col++) {
         twoDArray[row][col] = rand.nextInt(20);
       }
     }
+    // searching the 2D array for a value
     boolean foundValue = false;
     int value = 7;
     int rowFound = 0;
     int colFound = 0;
-    for(int row = 0; row < twoDArray.length; row++) {
-      for(int col = 0; col < twoDArray[row].length; col++) {
+    for (int row = 0; row < twoDArray.length; row++) {
+      for (int col = 0; col < twoDArray[row].length; col++) {
         if (twoDArray[row][col] == value) {
           foundValue = true;
           rowFound = row;
@@ -501,10 +564,9 @@ public class Main {
         }
       }
     }
-    if(foundValue == true) {
+    if (foundValue == true) {
       System.out.println("found value at " + rowFound + colFound);
-    }
-    else {
+    } else {
       System.out.println("value not found");
     }
   }
