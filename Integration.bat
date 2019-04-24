@@ -1,1 +1,0 @@
-java -jar Integration_project.jar
